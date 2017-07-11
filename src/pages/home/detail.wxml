@@ -1,0 +1,36 @@
+<!-- pages/home/detail.wxml -->
+<import src="../template/musicBar"/>
+<view class="m-lists_bar">
+    <!-- 头部 -->
+    <view class="single-header lists-list__cell "  >
+        <image src="{{bookList.thumbnail}}?imageView2/1/w/220/h/250" class="cover_img cell_image"></image>
+        <view class="lists-header__desc">
+            <view class="  title">{{bookList.title}}</view>
+            <view class="font_min desc_info">分类：{{bookList.category[0].name}}</view>
+            <view>
+                <button size="mini" class="btn_min {{is_faved?'btn_min_act':''}}" bindtap="bindColToggle" hover-class="btn_min_hover"> {{is_faved?'已收藏':'我要收藏'}}</button>
+            </view>
+        </view>
+    </view>
+    <!-- 内容介绍 -->
+    <view class="lists-block">
+        <view class="lists-block__header col_ff7e00">内容简介:</view>
+        <view class="font_min">{{bookList.excerpt}}</view>
+    </view>
+    <!-- 书籍列表 -->
+    <view class="lists-block">
+        <view class="lists-list__cell single-lists_cell" wx:for="{{bookList.audio}}" wx:for-item="audio" wx:key="">
+            <image class=" min_img" src="../../images/circle-stop_sm.png" wx:if="{{playing && playIndex == index && isCurPlay}}"  bindtap="stopAudio" ></image>
+            <image class=" min_img" src="../../images/circle-start_sm.png" wx:if="{{!playing ||playIndex != index ||!isCurPlay}}" data-index="{{index}}" data-type="1" bindtap="playAudio"></image>
+            
+            <view class="lists-line__desc">
+                <text class="line_bd font_mid">{{audio.name}}</text>
+                <text class="line_ft font_min">主播：{{audio.writer||'佚名'}}</text>
+                
+            </view>
+        </view>
+    </view>
+</view>
+<view style="height:142rpx;" wx:if="{{musicData.playList}}"></view>
+
+<template is="musicBar" data="{{musicData}}"></template>
